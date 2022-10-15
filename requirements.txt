@@ -3,7 +3,7 @@ Flask-Dropzone==1.5.4
 Flask-Uploads==0.2.1
 matplotlib==3.2.2
 numpy==1.16.2
-opencv-python==4.4.0.46
+opencv-python==4.6.0.66
 pathlib2==2.3.3
 Pillow==5.4.1
 pipreqs==0.4.11
