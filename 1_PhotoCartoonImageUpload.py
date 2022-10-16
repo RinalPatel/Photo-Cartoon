@@ -416,7 +416,7 @@ def handle_request():
         url_path = url_for('static', filename='shadow_'+timestr+'.jpg')
         
     try:
-        full_path = "192.168.38.68:5000" + url_path
+        full_path = "https://photo-cartoon.herokuapp.com/" + url_path
         return full_path
     except FileNotFoundError:
         abort(404)
@@ -426,70 +426,4 @@ def handle_request():
 
 
 app.run(host='0.0.0.0', port=5000, debug=True)
-
-
-# In[14]:
-
-
-imagefile = cv2.imread("DSC_2561.jpg")
-image_resized = cv2.resize(imagefile, None, fx=0.5, fy=0.5)
-image_cleared = cv2.medianBlur(image_resized, 3)
-image_cleared = cv2.medianBlur(image_cleared, 3)
-image_cleared = cv2.medianBlur(image_cleared, 3)
-
-image_cleared = cv2.edgePreservingFilter(image_cleared, sigma_s=25)
-image_filtered = cv2.bilateralFilter(image_cleared, 3, 10, 5)
-
-for i in range(2):
-    image_filtered = cv2.bilateralFilter(image_filtered, 3, 20, 10)
-
-for i in range(3):
-    image_filtered = cv2.bilateralFilter(image_filtered, 5, 30, 10)
-    
-gaussian_mask= cv2.GaussianBlur(image_filtered, (7,7), 2)
-image_sharp = cv2.addWeighted(image_filtered, 1.5, gaussian_mask, -0.5, 0)
-image_sharp = cv2.addWeighted(image_sharp, 1.4, gaussian_mask, -0.2, 10)
-timestr = time.strftime("%Y%m%d-%H%M%S")
-filename25 = 'image_sharp_'+timestr+'.jpg'
-cv2.imwrite(filename25, image_sharp)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-# imagefile = cv2.imread("DSC_2561.jpg")
-# inverted=255-imagefile
-# blered=cv2.GaussianBlur(inverted,(451,451),0) 
-# # 201
-# inverted_blured=255-blered
-# sketch=imagefile/inverted_blured
-# paint_sketch=sketch*255
-# timestr = time.strftime("%Y%m%d-%H%M%S")
-# filename27 = 'psketch_'+timestr+'.jpg'
-# cv2.imwrite(filename27, paint_sketch)
-
-
-# In[ ]:
-
-
-# template = cv2.imread("C:/Users/Lenovo P500/AppData/Local/Programs/Python/Python35/Scripts/images/flag.jpg")
-# imagefile = cv2.imread("Originalmg.jpg")
-# inverted=255-imagefile
-# blered=cv2.GaussianBlur(inverted,(21,21),0)
-# inverted_blured=255-blered
-# sketch=imagefile/inverted_blured
-# sketch=sketch*255
-# cv2.imwrite("sketch.jpg", sketch)
 
